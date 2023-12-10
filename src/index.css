@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "omyu_pretty";
+  src: url("./assets/font/omyu\ pretty.ttf") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "omyu_pretty";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
