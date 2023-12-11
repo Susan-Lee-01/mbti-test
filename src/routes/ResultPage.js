@@ -200,31 +200,24 @@ const data = {
 };
 
 export default function ResultPage({ MBTI }) {
-  const [result, setResult] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (MBTI) {
-      setResult(MBTI);
-    }
-  }, [MBTI]);
 
   return (
     <>
-      {result && (
+      {MBTI && (
         <Wrapper>
-          <SubTitle>{data[result].subtitle}</SubTitle>
-          <Image src={data[result].img} />
-          <SubTitle1>{data[result].subtit1}</SubTitle1>
-          <Content1>{data[result].cont1}</Content1>
+          <SubTitle>{data[MBTI].subtitle}</SubTitle>
+          <Image src={data[MBTI].img} />
+          <SubTitle1>{data[MBTI].subtit1}</SubTitle1>
+          <Content1>{data[MBTI].cont1}</Content1>
           <CharacterWrapper>
             <Left>
-              <SubTitle2>{data[result].subtit2}</SubTitle2>
-              <Content2>{data[result].cont2}</Content2>
+              <SubTitle2>{data[MBTI].subtit2}</SubTitle2>
+              <Content2>{data[MBTI].cont2}</Content2>
             </Left>
             <Right>
-              <SubTitle3>{data[result].subtit3}</SubTitle3>
-              <Content2>{data[result].cont3}</Content2>
+              <SubTitle3>{data[MBTI].subtit3}</SubTitle3>
+              <Content2>{data[MBTI].cont3}</Content2>
             </Right>
           </CharacterWrapper>
 
