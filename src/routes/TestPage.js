@@ -1,69 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import data from "../data/question.json";
+import { Background } from "../assets/images";
 import styled from "styled-components";
-
-const data = {
-  1: {
-    ques: "크리스마스가 다가온다! 나는?",
-    ans1: "벌써? 시간 빠르네.",
-    ans2: "크리스마스에 뭘 할지 생각한다.",
-  },
-  2: {
-    ques: "크리스마스 이브 집에서 쉬고 있는데 나오라는 친구의 전화",
-    ans1: "마침 심심했는데 잘됐다.",
-    ans2: "나오라고? 사람도 많을텐데...대충 둘러대고 계속 집에서 쉰다.",
-  },
-  3: {
-    ques: "크리스마스에 쓸데없는 선물 주기 하자! 친구의 말에 나의 속마음은?",
-    ans1: "벌써 머릿속에 쓸데없는 선물 몇개를 떠올림.",
-    ans2: "쓸데없는걸 굳이 왜...? 하지만 내색하지 않음.",
-  },
-  4: {
-    ques: "크리스마스에 가려던 가게가 예약이 다 차 버렸다! ",
-    ans1: "진작 예약하지 않은 나를 원망한다.",
-    ans2: "아 아쉽다... 다른데 가지 뭐.",
-  },
-  5: {
-    ques: "자고 일어나면 크리스마스이브! 침대에 누운 나는",
-    ans1: "별생각 없다. 잔다.",
-    ans2: "내일 무슨 일이 일어날지 상상의 나래를 펼친다.",
-  },
-  6: {
-    ques: "우리 크리스마스에 드레스코드 정해서 만나자!",
-    ans1: "1년에 하루뿐이니 특이한 분장을 한다.",
-    ans2: "튀기 싫어! 적당히 무난한 옷을 고른다.",
-  },
-  7: {
-    ques: "산타와 루돌프가 선물을 놓고 가려다 내 방을 어질러놨다. 누구에게 더 화가 날까?",
-    ans1: "사과는 뒷전, 일단 정리부터 하는 산타!",
-    ans2: "정리는 뒷전, 사과부터 하는 루돌프!",
-  },
-  8: {
-    ques: "산타와 루돌프가 수습을 시작했다. 내 방식은?",
-    ans1: "그냥 알아서 치워줘.",
-    ans2: "이거 먼저 치우고, 다음에 이거 치워줘.",
-  },
-  9: {
-    ques: "수습을 끝낸 산타와 루돌프가 인사를 하고 떠난다. 어떤 모습으로 떠났는가? ",
-    ans1: "문을 열고 나간다.",
-    ans2: "창문을 열고  하늘로 날아간다.",
-  },
-  10: {
-    ques: "정말 피곤했던 크리스마스 이브 친구가 쓸데없는 선물을 주겠다고 한다.",
-    ans1: "내 선물도 챙겨서 바로 나간다!",
-    ans2: "이미 에너지를 다 썼어... 다음에 주고받는다",
-  },
-  11: {
-    ques: "내가 정말 쓸데없는 걸 줬다며 친구가 엉엉 울어버린다... 이때 나는?",
-    ans1: "당황스럽지만 위로부터 해준다.",
-    ans2: "쓸데없는 선물 주기로 한 거 아니야?",
-  },
-  12: {
-    ques: "드디어 내일이 크리스마스! 나는 내일 뭐할까?",
-    ans1: "밥 먹고 영화 보고 구경 좀 하고.",
-    ans2: "이미 예약을 해놔서 그대로 움직인다.",
-  },
-};
 
 export default function TestPage({
   EI,
@@ -78,6 +17,7 @@ export default function TestPage({
 }) {
   const navigate = useNavigate();
   const [num, setNum] = useState(1);
+  const progressPercent = (num / 12) * 100;
 
   useEffect(() => {
     const count = (arr, val) =>
@@ -92,8 +32,11 @@ export default function TestPage({
 
   return (
     <Wrapper>
-      <Process>{num}/12</Process>
-      <H1>Q: {data[num].ques}</H1>
+      <ProgressBar>
+        <ProgressFill percent={progressPercent} />
+        <ProcessText percent={progressPercent}>{num}/12</ProcessText>
+      </ProgressBar>
+      <H1>Q: {data[String(num)].ques}</H1>
       <Answer
         onClick={() => {
           setNum(num + 1);
@@ -112,7 +55,7 @@ export default function TestPage({
           }
         }}
       >
-        {data[num].ans1}
+        {data[String(num)].ans1}
       </Answer>
       <Answer
         onClick={() => {
@@ -132,7 +75,7 @@ export default function TestPage({
           }
         }}
       >
-        {data[num].ans2}
+        {data[String(num)].ans2}
       </Answer>
     </Wrapper>
   );
@@ -144,9 +87,23 @@ const Wrapper = styled.div`
   align-items: center;
   height: 100vh;
   flex-direction: column;
-  background-image: url("https://ifh.cc/g/7Jdljr.jpg");
-  background-size: cover;
+  position: relative;
   padding: 20px;
+  z-index: 1;
+
+  &::before {
+    width: 100%;
+    height: 100%;
+    content: "";
+    background: url(${Background}) no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.7;
+    pointer-events: none;
+  }
 
   @media screen and (max-width: 425px) {
     justify-content: start;
@@ -154,14 +111,41 @@ const Wrapper = styled.div`
   }
 `;
 
-const Process = styled.p`
-  color: white;
-  font-size: 1.5rem;
+const ProgressBar = styled.div`
+  width: 36%;
+  height: 16px;
+  background-color: #f4ffffc4;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+`;
+
+const ProgressFill = styled.div`
+  width: ${(props) => props.percent}%;
+  height: 100%;
+  background-color: #505050;
+  border-radius: ${(props) =>
+    props.percent == 100 ? "10px" : "10px 0 0 10px"};
+  transition: width 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+const ProcessText = styled.div`
+  position: absolute;
+  color: ${(props) => (props.percent > 50 ? "white" : "black")};
+  font-size: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const H1 = styled.h1`
   color: white;
   background-color: #fc4768ce;
+  width: 48%;
   padding: 20px 40px;
   border-radius: 20px;
   text-align: center;
@@ -169,11 +153,13 @@ const H1 = styled.h1`
   box-shadow: 1px 1px 6px #b4b4b4;
 
   @media screen and (max-width: 768px) {
-    font-size: 18px;
+    font-size: 1.2rem;
     margin: 40px 20px;
-    padding: 20px;
+    padding: 1.2rem;
+    width: 60%;
   }
   @media screen and (max-width: 425px) {
+    width: 66%;
   }
 `;
 

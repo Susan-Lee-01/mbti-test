@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Main } from "../assets/images";
 import styled from "styled-components";
 
 export default function MainPage({ setEI, setSN, setTF, setJP }) {
@@ -7,7 +8,7 @@ export default function MainPage({ setEI, setSN, setTF, setJP }) {
   return (
     <Wrapper>
       <H1>☃️크리스마스 성격 테스트☃️</H1>
-      <Image src="https://ifh.cc/g/LF01QB.jpg" />
+      <Image src={Main} alt="mbti test main img" />
       <Button
         onClick={() => {
           navigate("/test");
@@ -35,7 +36,7 @@ const H1 = styled.h1`
   margin: 10px 0;
   color: #389561;
   text-align: center;
-  font-size: 2rem;
+  font-size: 2.4rem;
 
   @media screen and (max-width: 768px) {
     font-size: 1.7rem;
@@ -43,8 +44,8 @@ const H1 = styled.h1`
 `;
 
 const Image = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 
   @media screen and (max-width: 425px) {
     width: 250px;
@@ -56,7 +57,7 @@ const Button = styled.button`
   line-height: 15px;
   margin: 20px 0;
   padding: 10px;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   border-radius: 20px;
   border: none;
   background-color: #ffdcdc;
